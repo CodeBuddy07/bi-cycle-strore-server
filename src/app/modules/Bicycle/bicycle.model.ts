@@ -46,7 +46,7 @@ const bicycleSchema = new Schema<Bicycle, BicycleModel, BicycleMethods>(
   {
     timestamps: true,
     versionKey: false,
-    strict: true,
+    strict: 'throw',
   },
 );
 

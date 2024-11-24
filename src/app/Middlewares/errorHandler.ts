@@ -1,7 +1,7 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const errorHandler = (err: any, req: Request, res: Response) => {
+const errorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
   const statusCode =
     err?.message === 'No product found!'
       ? 404
@@ -20,6 +20,8 @@ const errorHandler = (err: any, req: Request, res: Response) => {
   };
 
   res.status(statusCode).json(errorResponse);
+
+  next();
 };
 
 export default errorHandler;
