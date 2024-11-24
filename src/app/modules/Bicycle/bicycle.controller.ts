@@ -1,7 +1,7 @@
-import { query, Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { BicycleServices } from './bicycle.service';
 
-const createBicycle = async (req: Request, res: Response) => {
+const createBicycle = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const bicycle = req.body;
 
@@ -12,18 +12,12 @@ const createBicycle = async (req: Request, res: Response) => {
       message: 'Bicycle created successfully',
       data: result,
     });
-  } catch (error) {
-    console.log(error);
-
-    res.status(500).json({
-      success: false,
-      message: 'Something Went Wrong!',
-      error: error,
-    });
+  } catch (err) {
+    next(err);
   }
 };
 
-const getBicycles = async (req: Request, res: Response) => {
+const getBicycles = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const searchTerm = req?.url?.split('?')[1]?.split('=')[0];
     const value = req?.query?.[searchTerm];
@@ -38,18 +32,68 @@ const getBicycles = async (req: Request, res: Response) => {
       message: 'Bicycles retrieved successfully',
       data: result,
     });
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    next(err);
+  }
+};
 
-    res.status(500).json({
-      success: false,
-      message: 'Something Went Wrong!',
-      error: error,
+const getSpecificBicycle = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { productId } = req?.params;
+
+    const result = await BicycleServices.getSpecificBicyclesFromDB(productId);
+
+    res.status(200).json({
+      success: true,
+      message: 'Bicycle retrieved successfully',
+      data: result,
     });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const updateSpecificBicycle = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { productId } = req?.params;
+    const data = req.body;
+
+    const result = await BicycleServices.updateSpecificBicyclesFromDB(
+      productId,
+      data,
+    );
+
+    res.status(200).json({
+      success: true,
+      message: 'Bicycle updated successfully',
+      data: result,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const deleteSpecificBicycle = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { productId } = req?.params;
+
+    const result =
+      await BicycleServices.deleteSpecificBicyclesFromDB(productId);
+
+    res.status(200).json({
+      success: true,
+      message: 'Bicycle deleted successfully',
+      data: result,
+    });
+  } catch (err) {
+    next(err);
   }
 };
 
 export const BicycleControllers = {
   createBicycle,
   getBicycles,
+  getSpecificBicycle,
+  updateSpecificBicycle,
+  deleteSpecificBicycle,
 };
