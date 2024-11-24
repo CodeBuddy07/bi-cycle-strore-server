@@ -1,19 +1,18 @@
-import { model, Schema, connect } from 'mongoose';
+import { model, Schema } from 'mongoose';
 import { Order } from './order.interface';
 import validator from 'validator';
-
 
 const orderSchema = new Schema<Order>(
   {
     email: {
       type: String,
       required: true,
-      validate:{
-        validator: function(v) {
+      validate: {
+        validator: function (v) {
           return validator.isEmail(v);
         },
-        message: props => `${props.value} is not a valid email!`
-      }
+        message: (props) => `${props.value} is not a valid email!`,
+      },
     },
     product: {
       type: String,
@@ -33,9 +32,8 @@ const orderSchema = new Schema<Order>(
   {
     timestamps: true,
     versionKey: false,
-    strict: "throw",
+    strict: 'throw',
   },
 );
-
 
 export const OrderModel = model<Order>('Order', orderSchema);

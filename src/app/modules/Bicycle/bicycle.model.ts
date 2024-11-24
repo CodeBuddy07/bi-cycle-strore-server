@@ -1,4 +1,4 @@
-import { Schema, model, connect, Model } from 'mongoose';
+import { Schema, model, Model } from 'mongoose';
 import { Bicycle } from './bicycle.interface';
 
 const bicycleSchema = new Schema<Bicycle, BicycleModel, BicycleMethods>(
@@ -51,10 +51,15 @@ const bicycleSchema = new Schema<Bicycle, BicycleModel, BicycleMethods>(
 );
 
 export type BicycleMethods = {
+  // eslint-disable-next-line no-unused-vars
   updateInventory(quantity: number): Promise<Bicycle | void>;
 };
 
-export type BicycleModel = Model<Bicycle, {}, BicycleMethods>;
+export type BicycleModel = Model<
+  Bicycle,
+  Record<string, never>,
+  BicycleMethods
+>;
 
 bicycleSchema.methods.updateInventory = async function (quantity: number) {
   if (this.quantity < quantity) {

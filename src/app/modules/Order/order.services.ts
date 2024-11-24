@@ -4,7 +4,6 @@ import { OrderModel } from './order.model';
 
 const createOrderIntoDB = async (order: Order) => {
   const product = await BicycleModel.findById(order.product);
-  console.log(product);
   if (!product) {
     throw new Error('No product found!');
   }
@@ -26,7 +25,7 @@ const getRevenueFromDB = async () => {
     })
     .unwind('Matched')
     .project({
-      revenue: { $multiply: ['$Matched.price', '$quantity'] }, // Calculate revenue per order
+      revenue: { $multiply: ['$Matched.price', '$quantity'] },
     })
     .group({
       _id: null,

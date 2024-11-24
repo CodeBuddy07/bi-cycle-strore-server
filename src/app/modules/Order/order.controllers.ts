@@ -14,13 +14,11 @@ const createOrder = async (req: Request, res: Response, next: NextFunction) => {
     });
   } catch (err) {
     next(err);
-
   }
 };
 
 const getRevenue = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    
     const result = await orderServices.getRevenueFromDB();
 
     res.status(200).json({
@@ -30,11 +28,10 @@ const getRevenue = async (req: Request, res: Response, next: NextFunction) => {
     });
   } catch (err) {
     next(err);
-
   }
 };
 
 export const orderControllers = {
-    createOrder,
-    getRevenue
-} 
+  createOrder,
+  getRevenue,
+};

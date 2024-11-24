@@ -25,8 +25,7 @@ const getSpecificBicyclesFromDB = async (id: string) => {
 };
 
 const updateSpecificBicyclesFromDB = async (id: string, data: object) => {
-  
-  const result = await BicycleModel.findByIdAndUpdate(id, data, {new: true});
+  const result = await BicycleModel.findByIdAndUpdate(id, data, { new: true });
   if (!result) {
     throw new Error('No product found!');
   }
@@ -34,7 +33,6 @@ const updateSpecificBicyclesFromDB = async (id: string, data: object) => {
 };
 
 const deleteSpecificBicyclesFromDB = async (id: string) => {
-  
   const result = await BicycleModel.findByIdAndDelete(id);
   if (!result) {
     throw new Error('No product found!');
@@ -47,5 +45,5 @@ export const BicycleServices = {
   getAllBicyclesFromDB,
   getSpecificBicyclesFromDB,
   updateSpecificBicyclesFromDB,
-  deleteSpecificBicyclesFromDB
+  deleteSpecificBicyclesFromDB,
 };

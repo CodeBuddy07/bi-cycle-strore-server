@@ -1,7 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import { BicycleServices } from './bicycle.service';
 
-const createBicycle = async (req: Request, res: Response, next: NextFunction) => {
+const createBicycle = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const bicycle = req.body;
 
@@ -37,9 +41,13 @@ const getBicycles = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const getSpecificBicycle = async (req: Request, res: Response, next: NextFunction) => {
+const getSpecificBicycle = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
-    const { productId } = req?.params;
+    const { productId } = req?.params ?? {};
 
     const result = await BicycleServices.getSpecificBicyclesFromDB(productId);
 
@@ -53,9 +61,13 @@ const getSpecificBicycle = async (req: Request, res: Response, next: NextFunctio
   }
 };
 
-const updateSpecificBicycle = async (req: Request, res: Response, next: NextFunction) => {
+const updateSpecificBicycle = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
-    const { productId } = req?.params;
+    const { productId } = req?.params ?? {};
     const data = req.body;
 
     const result = await BicycleServices.updateSpecificBicyclesFromDB(
@@ -73,9 +85,13 @@ const updateSpecificBicycle = async (req: Request, res: Response, next: NextFunc
   }
 };
 
-const deleteSpecificBicycle = async (req: Request, res: Response, next: NextFunction) => {
+const deleteSpecificBicycle = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
-    const { productId } = req?.params;
+    const { productId } = req?.params ?? {};
 
     const result =
       await BicycleServices.deleteSpecificBicyclesFromDB(productId);
