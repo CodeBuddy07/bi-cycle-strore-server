@@ -10,3 +10,10 @@ This is a simple Express app with TypeScript, MongoDB, and Mongoose. It’s for 
 - **Inventory Management**: Quantity is reduced when an order is placed, and stock status is updated.
 - **Proper Detailed Error Handling**: Its handle almost all type error with ease.
 
+## Project Setup
+
+### 1. Clone the Repo
+
+```bash
+git clone https://github.com/CodeBuddy07/bi-cycle-strore-server.git
+cd bi-cycle-strore-server
