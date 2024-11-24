@@ -18,17 +18,27 @@ const getAllBicyclesFromDB = async (searchTerm: string, value: string) => {
 
 const getSpecificBicyclesFromDB = async (id: string) => {
   const result = await BicycleModel.findById(id);
+  if (!result) {
+    throw new Error('No product found!');
+  }
   return result;
 };
 
 const updateSpecificBicyclesFromDB = async (id: string, data: object) => {
   
   const result = await BicycleModel.findByIdAndUpdate(id, data, {new: true});
+  if (!result) {
+    throw new Error('No product found!');
+  }
   return result;
 };
 
 const deleteSpecificBicyclesFromDB = async (id: string) => {
-  await BicycleModel.findByIdAndDelete(id);
+  
+  const result = await BicycleModel.findByIdAndDelete(id);
+  if (!result) {
+    throw new Error('No product found!');
+  }
   return {};
 };
 

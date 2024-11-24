@@ -8,8 +8,8 @@ const createBicycle = async (req: Request, res: Response, next: NextFunction) =>
     const result = await BicycleServices.createBicycleIntoDB(bicycle);
 
     res.status(200).json({
-      success: true,
       message: 'Bicycle created successfully',
+      success: true,
       data: result,
     });
   } catch (err) {
@@ -28,8 +28,8 @@ const getBicycles = async (req: Request, res: Response, next: NextFunction) => {
     );
 
     res.status(200).json({
-      success: true,
       message: 'Bicycles retrieved successfully',
+      success: true,
       data: result,
     });
   } catch (err) {
@@ -44,8 +44,8 @@ const getSpecificBicycle = async (req: Request, res: Response, next: NextFunctio
     const result = await BicycleServices.getSpecificBicyclesFromDB(productId);
 
     res.status(200).json({
-      success: true,
       message: 'Bicycle retrieved successfully',
+      success: true,
       data: result,
     });
   } catch (err) {
@@ -64,8 +64,8 @@ const updateSpecificBicycle = async (req: Request, res: Response, next: NextFunc
     );
 
     res.status(200).json({
-      success: true,
       message: 'Bicycle updated successfully',
+      success: true,
       data: result,
     });
   } catch (err) {
@@ -81,8 +81,8 @@ const deleteSpecificBicycle = async (req: Request, res: Response, next: NextFunc
       await BicycleServices.deleteSpecificBicyclesFromDB(productId);
 
     res.status(200).json({
-      success: true,
       message: 'Bicycle deleted successfully',
+      success: true,
       data: result,
     });
   } catch (err) {
