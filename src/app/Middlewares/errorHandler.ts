@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 
 const errorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
-  const statusCode = res.statusCode === 200 ? 400 : res.statusCode;
+  const statusCode = err?.message === 'No product found!' ? 404 : res.statusCode === 200 ? 400 : res.statusCode;
 
   const errorResponse = {
     message: err.message || "Something went wrong",

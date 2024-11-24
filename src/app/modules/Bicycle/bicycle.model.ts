@@ -1,13 +1,13 @@
-import { Schema, model, connect } from 'mongoose';
+import { Schema, model, connect, Model } from 'mongoose';
 import { Bicycle } from './bicycle.interface';
 
-const bicycleSchema = new Schema<Bicycle>(
+const bicycleSchema = new Schema<Bicycle, BicycleModel, BicycleMethods>(
   {
     name: {
       type: String,
       required: true,
       trim: true,
-      unique: true
+      unique: true,
     },
     brand: {
       type: String,
@@ -17,7 +17,7 @@ const bicycleSchema = new Schema<Bicycle>(
     price: {
       type: Number,
       required: true,
-      min: 1,
+      min: 0,
     },
     type: {
       type: String,
@@ -36,7 +36,7 @@ const bicycleSchema = new Schema<Bicycle>(
     quantity: {
       type: Number,
       required: true,
-      min: 1,
+      min: 0,
     },
     inStock: {
       type: Boolean,
@@ -45,8 +45,27 @@ const bicycleSchema = new Schema<Bicycle>(
   },
   {
     timestamps: true,
-    versionKey: false
+    versionKey: false,
+    strict: true,
   },
 );
 
-export const BicycleModel = model<Bicycle>('Bicycle', bicycleSchema);
+export type BicycleMethods = {
+  updateInventory(quantity: number): Promise<Bicycle | void>;
+};
+
+export type BicycleModel = Model<Bicycle, {}, BicycleMethods>;
+
+bicycleSchema.methods.updateInventory = async function (quantity: number) {
+  if (this.quantity < quantity) {
+    throw new Error('Insufficient stock for this product.');
+  }
+  this.quantity -= quantity;
+  this.inStock = this.quantity > 0;
+  await this.save();
+};
+
+export const BicycleModel = model<Bicycle, BicycleModel>(
+  'Bicycle',
+  bicycleSchema,
+);
